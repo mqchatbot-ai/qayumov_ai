@@ -24,7 +24,6 @@ async function sendMessage() {
  
 }
 
-sendMessage(); // funksiyani ishga tushuramiz
 
 
 const data = await response.json();
