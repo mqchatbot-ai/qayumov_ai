@@ -5,7 +5,6 @@ const promptInput = promptForm.querySelector(".prompt-input");
 const fileInput = promptForm.querySelector("#file-input");
 const fileUploadWrapper = promptForm.querySelector(".file-upload-wrapper");
 const themeToggleBtn = document.querySelector("#theme-toggle-btn");
-const API_KEY = "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";
 // API Setup
 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
   method: "POST",
