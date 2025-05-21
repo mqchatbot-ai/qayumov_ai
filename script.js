@@ -1,6 +1,6 @@
 // Avval API_URL ni aniqlab olaylik
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const API_KEY = "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";
+const API_KEY = "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";
 
 const container = document.querySelector(".container");
 const chatsContainer = document.querySelector(".chats-container");
