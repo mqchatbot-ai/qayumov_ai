@@ -5,7 +5,6 @@ const promptInput = promptForm.querySelector(".prompt-input");
 const fileInput = promptForm.querySelector("#file-input");
 const fileUploadWrapper = promptForm.querySelector(".file-upload-wrapper");
 const themeToggleBtn = document.querySelector("#theme-toggle-btn");
-const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 // API Setup
 async function sendMessage() {
   const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
