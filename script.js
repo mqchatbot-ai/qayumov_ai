@@ -14,20 +14,25 @@ async function sendMessage() {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      model: "mistralai/mistral-7b-instruct", // bepul model
+      model: "mistralai/mistral-7b-instruct",
       messages: [
         { role: "user", content: "Salom, siz kimsiz?" }
       ]
     })
   });
 
- 
+  const data = await response.json();
+  console.log(data); // to‘liq javobni ko‘rish uchun
+
+  if (data.choices && data.choices.length > 0) {
+    console.log(data.choices[0].message.content);
+  } else {
+    console.log("Javob formatida xatolik bor.");
+  }
 }
 
+// sendMessage(); ← hozircha chaqirilmayapti
 
-
-const data = await response.json();
-console.log(data.choices[0].message.content);
 
 let controller, typingInterval;
 const chatHistory = [];
