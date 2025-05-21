@@ -6,19 +6,27 @@ const fileInput = promptForm.querySelector("#file-input");
 const fileUploadWrapper = promptForm.querySelector(".file-upload-wrapper");
 const themeToggleBtn = document.querySelector("#theme-toggle-btn");
 // API Setup
-const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-  method: "POST",
-  headers: {
-    "Authorization": "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",
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    model: "mistralai/mistral-7b-instruct", // bepul model
-    messages: [
-      { role: "user", content: "Salom, siz kimsiz?" }
-    ]
-  })
-});
+async function sendMessage() {
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": "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",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "mistralai/mistral-7b-instruct", // bepul model
+      messages: [
+        { role: "user", content: "Salom, siz kimsiz?" }
+      ]
+    })
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
+
+sendMessage(); // funksiyani ishga tushuramiz
+
 
 const data = await response.json();
 console.log(data.choices[0].message.content);
