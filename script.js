@@ -1,6 +1,6 @@
 // Avval API_URL ni aniqlab olaylik
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const API_KEY = "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";
+const API_KEY = "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";
 
 const container = document.querySelector(".container");
 const chatsContainer = document.querySelector(".chats-container");
@@ -13,6 +13,25 @@ const themeToggleBtn = document.querySelector("#theme-toggle-btn");
 let controller, typingInterval;
 const chatHistory = [];
 const userData = { message: "", file: {} };
+
+fetch("https://openrouter.ai/api/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": "Bearer <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>",
+    "HTTP-Referer": "<https://mqchatbot-ai.github.io/qayumov_ai/>", // Optional. Site URL for rankings on openrouter.ai.
+    "X-Title": "<QM chatbot>", // Optional. Site title for rankings on openrouter.ai.
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "model": "openai/gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the meaning of life?"
+      }
+    ]
+  })
+});
 
 const isLightTheme = localStorage.getItem("themeColor") === "light_mode";
 document.body.classList.toggle("light-theme", isLightTheme);
