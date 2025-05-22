@@ -18,6 +18,40 @@ const isLightTheme = localStorage.getItem("themeColor") === "light_mode";
 document.body.classList.toggle("light-theme", isLightTheme);
 themeToggleBtn.textContent = isLightTheme ? "dark_mode" : "light_mode";
 
+
+async function generateImageFromText(prompt) {
+  const apiUrl = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1";
+  const hfToken = "hf_UtPMnBUTqZenyWVkehhqakHnaxtNoKfvaAE"; // Hugging Face tokeningizni shu yerga yozing
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${hf_UtPMnBUTqZenyWVkehhqakHnaxtNoKfvaAn}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ inputs: prompt })
+    });
+
+    if (!response.ok) throw new Error("Rasm generatsiyasida xatolik");
+
+    const blob = await response.blob();
+    const imageURL = URL.createObjectURL(blob);
+
+    // Rasmni UI ga chiqarish (masalan, chatga qo‘shish)
+    const botMsgHTML = `<img class="avatar" src="mee.jpg" /> <img src="${imageURL}" class="generated-image" />`;
+    const botMsgDiv = createMessageElement(botMsgHTML, "bot-message");
+    chatsContainer.appendChild(botMsgDiv);
+    scrollToBottom();
+  } catch (error) {
+    const botMsgHTML = `<p class="message-text" style="color: red">${error.message}</p>`;
+    const botMsgDiv = createMessageElement(botMsgHTML, "bot-message");
+    chatsContainer.appendChild(botMsgDiv);
+    scrollToBottom();
+  }
+}
+
+
 const createMessageElement = (content, ...classes) => {
   const div = document.createElement("div");
   div.classList.add("message", ...classes);
