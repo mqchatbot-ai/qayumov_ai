@@ -56,7 +56,7 @@ const generateResponse = async (botMsgDiv) => {
     const response = await fetch(https://mqchatbot-ai.github.io/qayumov_ai/, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${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}`,
+        "Authorization": `Bearer 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`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
