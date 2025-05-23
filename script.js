@@ -1,6 +1,6 @@
-// Avval API_URL ni aniqlab olaylik
-const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const API_KEY = "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";
+// OpenAI API sozlamalari
+const API_URL = "https://api.openai.com/v1/chat/completions";
+const API_KEY = {"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"}; // <-- bu yerga o'z API kalitingizni yozing
 
 const container = document.querySelector(".container");
 const chatsContainer = document.querySelector(".chats-container");
@@ -14,62 +14,9 @@ let controller, typingInterval;
 const chatHistory = [];
 const userData = { message: "", file: {} };
 
-fetch("https://openrouter.ai/api/v1/chat/completions", {
-  method: "POST",
-  headers: {
-    "Authorization": "Bearer <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>",
-    "HTTP-Referer": "<https://mqchatbot-ai.github.io/qayumov_ai/>", // Optional. Site URL for rankings on openrouter.ai.
-    "X-Title": "<QM chatbot>", // Optional. Site title for rankings on openrouter.ai.
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    "model": "openai/gpt-3.5-turbo",
-    "messages": [
-      {
-        "role": "user",
-        "content": "What is the meaning of life?"
-      }
-    ]
-  })
-});
-
 const isLightTheme = localStorage.getItem("themeColor") === "light_mode";
 document.body.classList.toggle("light-theme", isLightTheme);
 themeToggleBtn.textContent = isLightTheme ? "dark_mode" : "light_mode";
-
-
-async function generateImageFromText(prompt) {
-  const apiUrl = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1";
-  const hfToken = "hf_UtPMnBUTqZenyWVkehhqakHnaxtNoKfvaAE"; // Hugging Face tokeningizni shu yerga yozing
-
-  try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${hf_UtPMnBUTqZenyWVkehhqakHnaxtNoKfvaAn}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ inputs: prompt })
-    });
-
-    if (!response.ok) throw new Error("Rasm generatsiyasida xatolik");
-
-    const blob = await response.blob();
-    const imageURL = URL.createObjectURL(blob);
-
-    // Rasmni UI ga chiqarish (masalan, chatga qo‘shish)
-    const botMsgHTML = `<img class="avatar" src="mee.jpg" /> <img src="${imageURL}" class="generated-image" />`;
-    const botMsgDiv = createMessageElement(botMsgHTML, "bot-message");
-    chatsContainer.appendChild(botMsgDiv);
-    scrollToBottom();
-  } catch (error) {
-    const botMsgHTML = `<p class="message-text" style="color: red">${error.message}</p>`;
-    const botMsgDiv = createMessageElement(botMsgHTML, "bot-message");
-    chatsContainer.appendChild(botMsgDiv);
-    scrollToBottom();
-  }
-}
-
 
 const createMessageElement = (content, ...classes) => {
   const div = document.createElement("div");
@@ -102,22 +49,19 @@ const generateResponse = async (botMsgDiv) => {
 
   chatHistory.push({
     role: "user",
-    parts: [{ text: userData.message }, ...(userData.file.data ? [{ inline_data: (({ fileName, isImage, ...rest }) => rest)(userData.file) }] : [])],
+    content: userData.message,
   });
 
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(https://mqchatbot-ai.github.io/qayumov_ai/, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${API_KEY}`,
+        "Authorization": `Bearer ${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}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "mistralai/mistral-7b-instruct",
-        messages: chatHistory.map((msg) => ({
-          role: msg.role,
-          content: msg.parts.map(p => p.text).join(" ")
-        }))
+        model: "gpt-3.5-turbo",
+        messages: chatHistory
       }),
       signal: controller.signal,
     });
@@ -127,9 +71,9 @@ const generateResponse = async (botMsgDiv) => {
 
     const responseText = data.choices[0].message.content.trim();
     typingEffect(responseText, textElement, botMsgDiv);
-    chatHistory.push({ role: "model", parts: [{ text: responseText }] });
+    chatHistory.push({ role: "assistant", content: responseText });
   } catch (error) {
-    textElement.textContent = error.name === "AbortError" ? "Response to‘xtatildi." : error.message;
+    textElement.textContent = error.name === "AbortError" ? "Javob to‘xtatildi." : error.message;
     textElement.style.color = "#d62939";
     botMsgDiv.classList.remove("loading");
     document.body.classList.remove("bot-responding");
