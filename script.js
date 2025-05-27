@@ -109,7 +109,7 @@ const handleFormSubmit = (e) => {
   scrollToBottom();
 
   setTimeout(() => {
-    const botMsgHTML = `<img class="avatar" src="gemini.svg" /> <p class="message-text">Just a sec...</p>`;
+    const botMsgHTML = `<img class="avatar" src="mee.jpg" /> <p class="message-text">Hozir...</p>`;
     const botMsgDiv = createMessageElement(botMsgHTML, "bot-message", "loading");
     chatsContainer.appendChild(botMsgDiv);
     scrollToBottom();
